@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, TextInput, Button, StyleSheet, SafeAreaView, View, Alert } from 'react-native'
-import { connect, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { login } from "../../redux/actions/LoginAction";
 
-const Login = (login) => {
+function Login(props) {
+   const [usernameValue, setUsernameValue] = useState("test_user@gmail.com")
+   const [paswordValue, setPasswordValue] = useState("qkmme@vEEW!8f5r")
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
             <View style={styles.textInputContainer}>
-                <TextInput style={styles.textInput} placeholder="Email"></TextInput>
-                <TextInput style={styles.textInput} placeholder="Password"></TextInput>
+                <TextInput style={styles.textInput}
+                    placeholder="Email"
+                    value = {usernameValue}
+                    onChangeText={(text) => setUsernameValue(text)}
+                />
+                <TextInput style={styles.textInput}
+                    placeholder="Password"
+                    value = {paswordValue}
+                    onChangeText={(text) => setPasswordValue(text)} />
                 <Text style={{
                     alignSelf: "flex-end",
                     marginEnd: 16,
@@ -25,7 +33,7 @@ const Login = (login) => {
                     <View style={[{ width: "50%", margin: 10 }]}>
                         <Button
                             title="LOGIN"
-                            onPress={() => login()}
+                            onPress={() => props.login(usernameValue, paswordValue)}
                         />
                     </View>
                 </View>
@@ -35,7 +43,7 @@ const Login = (login) => {
 }
 
 
-export default connect(null, login)(Login)
+export default connect(null, { login })(Login)
 
 const styles = StyleSheet.create({
     container: {

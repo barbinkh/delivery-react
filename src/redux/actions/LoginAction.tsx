@@ -10,9 +10,7 @@ export const loginActions = {
     failure: (error: any) => ({ type: LOGIN_FAILURE, payload: error }),
 }
 
-export function login() {
-    const username = "test_user@gmail.com"
-    const password = "qkmme@vEEW!8f5r"
+export function login(username, password) {
     return async dispatch => {
         try {
             dispatch(loginActions.request({ username, password }))
