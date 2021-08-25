@@ -11,9 +11,9 @@ export const loginActions = {
 }
 
 export function login(username, password) {
-    return async dispatch => {
+    return dispatch => {
+        dispatch(loginActions.request({ username, password }))
         try {
-            dispatch(loginActions.request({ username, password }))
             const qs = require('qs');
             API.post('v1/o/token/',
                 qs.stringify({

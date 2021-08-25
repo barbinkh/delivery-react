@@ -1,24 +1,38 @@
 import React, { useState } from "react";
-import { Image, Text, TextInput, Button, StyleSheet, SafeAreaView, View, Alert } from 'react-native'
+import { Image, Text, TextInput, Button, StyleSheet, SafeAreaView, View, Alert, TouchableOpacity } from 'react-native'
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/LoginAction";
 
 function Login(props) {
-   const [usernameValue, setUsernameValue] = useState("test_user@gmail.com")
-   const [paswordValue, setPasswordValue] = useState("qkmme@vEEW!8f5r")
+    const [inputValue, setValue] = useState({
+        username: "barbinkh@yopmail.com",
+        password: "123456" //qkmme@vEEW!8f5r
+    })
+    const usernameInputChange = (text) => {
+        setValue({
+            ...inputValue,
+            username: text
+        })
+    }
+    const passwordInputChange = (text) => {
+        setValue({
+            ...inputValue,
+            password: text
+        })
+    }
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
             <View style={styles.textInputContainer}>
                 <TextInput style={styles.textInput}
                     placeholder="Email"
-                    value = {usernameValue}
-                    onChangeText={(text) => setUsernameValue(text)}
+                    onChangeText={(text) => usernameInputChange(text)}
+                    defaultValue={inputValue.username}
                 />
                 <TextInput style={styles.textInput}
                     placeholder="Password"
-                    value = {paswordValue}
-                    onChangeText={(text) => setPasswordValue(text)} />
+                    onChangeText={(text) => passwordInputChange(text)}
+                    defaultValue={inputValue.password} />
                 <Text style={{
                     alignSelf: "flex-end",
                     marginEnd: 16,
@@ -27,14 +41,16 @@ function Login(props) {
                     <View style={[{ width: "50%", margin: 10 }]}>
                         <Button
                             title="SIGN UP"
-                            onPress={() => { }}
+                            onPress={() => { props.history.push("/signup")}}
                         />
                     </View>
                     <View style={[{ width: "50%", margin: 10 }]}>
-                        <Button
-                            title="LOGIN"
-                            onPress={() => props.login(usernameValue, paswordValue)}
-                        />
+                        <TouchableOpacity>
+                            <Button
+                                title="LOGIN"
+                                onPress={() => props.login(inputValue.username, inputValue.password)}
+                            />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
