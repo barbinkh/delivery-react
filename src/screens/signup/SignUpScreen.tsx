@@ -14,13 +14,23 @@ function SingUp(props) {
         password: '',
         confirmPassword: '',
     })
+
+    const [errors, setError] = useState({
+        nameError: "",
+        emailError: "",
+        passwordError: "",
+        confirmPasswordError: "''"
+    })
+
     const usernameInputChange = (text) => {
+        validateName(text)
         setValue({
             ...inputValue,
             fullname: text
         })
     }
     const emailInputChange = (text) => {
+        validateEmail(text)
         setValue({
             ...inputValue,
             email: text
@@ -40,50 +50,65 @@ function SingUp(props) {
         })
     }
 
+    const validateName = (text) => {
+        setError({
+            ...errors,
+            nameError: !!!text ? "Fullname can not be blank" : ""
+        })
+    }
+
+    const validateEmail = (text) => {
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+        if (text.length > 0 && reg.test(text) === false) {
+            setError({
+                ...errors,
+                emailError: "Wrong email format"
+            })
+        } else if (!!!text) {
+            setError({
+                ...errors,
+                emailError: "Email can not be blank"
+            })
+        } else {
+            setError({
+                ...errors,
+                emailError: ""
+            })
+        }
+    }
+
     const handleClick = () => {
-        let message = ""
-        if(!!!inputValue.fullname ){
-            console.log('The Fullname field may not be blank.')
-            message = message.concat('The Fullname field may not be blank.')
-        }
-
-        if (!!!inputValue.email) {
-         message = message + 'Enter a valid email address.'
-        }
 
 
-        if(inputValue.password){
-
-        }
-        console.log(message)
-        alert(message)
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
             <View style={styles.textInputContainer}>
-                л
                 <TextInput style={styles.textInput}
                     placeholder="Full Name"
                     onChangeText={(text) => usernameInputChange(text)}
-                    defaultValue={inputValue.fullname}
-                />
-
+                    defaultValue={inputValue.fullname} />
+                {<Text style ={styles.error}>{errors.nameError}</Text>}
                 <TextInput style={styles.textInput}
                     placeholder="Email"
                     onChangeText={(text) => emailInputChange(text)}
-                    defaultValue={inputValue.email}
-                />
+                    defaultValue={inputValue.email} />
+                {<Text style ={styles.error}>{errors.emailError}</Text>}
+
                 <TextInput style={styles.textInput}
                     placeholder="Password"
                     onChangeText={(text) => passwordInputChange(text)}
                     defaultValue={inputValue.password} />
+                {<Text style ={styles.error}>{errors.passwordError}</Text>}
 
                 <TextInput style={styles.textInput}
                     placeholder="Confirm Password"
                     onChangeText={(text) => confirmPasswordInputChange(text)}
                     defaultValue={inputValue.confirmPassword} />
+                {<Text style ={styles.error}>{errors.confirmPasswordError}</Text>}
 
                 <View style={styles.buttonsContainer}>
                     <View>
@@ -113,7 +138,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 40,
-        margin: 12,
+        marginTop: 6,
         borderWidth: 1,
         padding: 10,
         borderRadius: 5,
@@ -123,9 +148,12 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginStart: 16,
         marginEnd: 16,
+        padding: 12,
         backgroundColor: "#00BCD4",
         height: 400,
         borderRadius: 10,
+        shadowColor: "black",
+        shadowOffset: {width: 100, height: -100}
     },
     imageLogo: {
         marginTop: 100,
@@ -134,10 +162,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     buttonsContainer: {
-        marginStart: 24,
-        marginEnd: 24,
+        marginStart: 16,
+        marginEnd: 16,
         marginTop: 16,
-        flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
+    },
+    error:{
+        padding:4,
+        fontSize: 12,
+        color: '#ff0000'
     }
+    
 })
