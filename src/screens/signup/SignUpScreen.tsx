@@ -1,8 +1,10 @@
 import { connect } from "react-redux";
 import React from "react";
 import { useState } from "react";
-import { SafeAreaView, Image, View, TextInput, Text, StyleSheet, Button, TouchableOpacity, ActivityIndicator } from "react-native";
+import { SafeAreaView, Image, View, TextInput, Text, StyleSheet, Button, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView } from "react-native"
 import { signUp } from "../../redux/actions/SignUpActions";
+import { validateEmail, validateName, validatePassword, validateConfirmPassword } from "../../utils/ValidationUtils"
+import { Platform } from "react-native";
 
 
 function SingUp(props) {
@@ -19,24 +21,36 @@ function SingUp(props) {
         nameError: "",
         emailError: "",
         passwordError: "",
-        confirmPasswordError: "''"
+        confirmPasswordError: "",
+        isValid: false
     })
 
     const usernameInputChange = (text) => {
-        validateName(text)
+        setError({
+            ...errors,
+            nameError: validateName(text)
+        })
         setValue({
             ...inputValue,
             fullname: text
         })
     }
     const emailInputChange = (text) => {
-        validateEmail(text)
+        setError({
+            ...errors,
+            emailError: validateEmail(text)
+        })
         setValue({
             ...inputValue,
             email: text
         })
     }
+
     const passwordInputChange = (text) => {
+        setError({
+            ...errors,
+            passwordError: validatePassword(text)
+        })
         setValue({
             ...inputValue,
             password: text
@@ -48,80 +62,61 @@ function SingUp(props) {
             ...inputValue,
             confirmPassword: text
         })
-    }
-
-    const validateName = (text) => {
         setError({
             ...errors,
-            nameError: !!!text ? "Fullname can not be blank" : ""
+            confirmPasswordError: validateConfirmPassword(inputValue.password, text)
         })
     }
 
-    const validateEmail = (text) => {
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-
-        if (text.length > 0 && reg.test(text) === false) {
-            setError({
-                ...errors,
-                emailError: "Wrong email format"
-            })
-        } else if (!!!text) {
-            setError({
-                ...errors,
-                emailError: "Email can not be blank"
-            })
-        } else {
-            setError({
-                ...errors,
-                emailError: ""
-            })
-        }
-    }
-
     const handleClick = () => {
-
-
+        if (!!!(errors.confirmPasswordError && errors.emailError && errors.nameError && errors.passwordError)) {
+           
+            props.signUp({ fullname: inputValue.fullname, email: inputValue.email, password: inputValue.password, confirmPassword: inputValue.confirmPassword })
+        }
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
-            <View style={styles.textInputContainer}>
-                <TextInput style={styles.textInput}
-                    placeholder="Full Name"
-                    onChangeText={(text) => usernameInputChange(text)}
-                    defaultValue={inputValue.fullname} />
-                {<Text style ={styles.error}>{errors.nameError}</Text>}
-                <TextInput style={styles.textInput}
-                    placeholder="Email"
-                    onChangeText={(text) => emailInputChange(text)}
-                    defaultValue={inputValue.email} />
-                {<Text style ={styles.error}>{errors.emailError}</Text>}
+            <KeyboardAvoidingView
+                behavior={"position"}>
+                <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
+                <View style={styles.textInputContainer}>
+                    <TextInput style={styles.textInput}
+                        placeholder="Full Name"
+                        onChangeText={(text) => usernameInputChange(text)}
+                        defaultValue={inputValue.fullname} />
+                    {<Text style={styles.error}>{errors.nameError}</Text>}
+                    <TextInput style={styles.textInput}
+                        placeholder="Email"
+                        onChangeText={(text) => emailInputChange(text)}
+                        defaultValue={inputValue.email} />
+                    {<Text style={styles.error}>{errors.emailError}</Text>}
 
-                <TextInput style={styles.textInput}
-                    placeholder="Password"
-                    onChangeText={(text) => passwordInputChange(text)}
-                    defaultValue={inputValue.password} />
-                {<Text style ={styles.error}>{errors.passwordError}</Text>}
+                    <TextInput secureTextEntry={true} style={styles.textInput}
+                        placeholder="Password"
+                        onChangeText={(text) => passwordInputChange(text)}
+                        defaultValue={inputValue.password} />
+                    {<Text style={styles.error}>{errors.passwordError}</Text>}
 
-                <TextInput style={styles.textInput}
-                    placeholder="Confirm Password"
-                    onChangeText={(text) => confirmPasswordInputChange(text)}
-                    defaultValue={inputValue.confirmPassword} />
-                {<Text style ={styles.error}>{errors.confirmPasswordError}</Text>}
+                    <TextInput secureTextEntry={true} style={styles.textInput}
+                        placeholder="Confirm Password"
+                        onChangeText={(text) => confirmPasswordInputChange(text)}
+                        defaultValue={inputValue.confirmPassword} />
+                    {<Text style={styles.error}>{errors.confirmPasswordError}</Text>}
 
-                <View style={styles.buttonsContainer}>
-                    <View>
-                        <TouchableOpacity>
-                            <Button
-                                title="CREATE ACCOUNT"
-                                onPress={() => handleClick()}
-                            />
-                        </TouchableOpacity>
+                    <View style={styles.buttonsContainer}>
+                        <View>
+                            <TouchableOpacity>
+                                <Button
+                                    title="CREATE ACCOUNT"
+                                    onPress={() => handleClick()}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
+                    {loading && <ActivityIndicator size="large" color="#00ff00" />}
                 </View>
-                {loading && <ActivityIndicator size="large" color="#00ff00" />}
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
@@ -139,21 +134,31 @@ const styles = StyleSheet.create({
     textInput: {
         height: 40,
         marginTop: 6,
-        borderWidth: 1,
+        borderWidth: 0.5,
         padding: 10,
         borderRadius: 5,
+        borderColor: "#c7c7c7",
         backgroundColor: "#fff"
     },
     textInputContainer: {
         marginTop: 40,
         marginStart: 16,
         marginEnd: 16,
-        padding: 12,
+        paddingStart: 12,
+        paddingEnd: 12,
+        paddingBottom: 12,
+        paddingTop: 20,
         backgroundColor: "#00BCD4",
         height: 400,
         borderRadius: 10,
-        shadowColor: "black",
-        shadowOffset: {width: 100, height: -100}
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 5,
     },
     imageLogo: {
         marginTop: 100,
@@ -167,10 +172,10 @@ const styles = StyleSheet.create({
         marginTop: 16,
         justifyContent: 'space-between',
     },
-    error:{
-        padding:4,
+    error: {
+        padding: 4,
         fontSize: 12,
         color: '#ff0000'
     }
-    
+
 })
