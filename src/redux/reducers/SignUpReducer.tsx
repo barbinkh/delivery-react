@@ -1,26 +1,28 @@
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../constants/Constants";
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE } from "../constants/Constants";
+
+
 const initialState = {
-    loginData: null,
-    tokenData: null,
+    signupData: null,
+    registerData: null,
     error: null,
     success: false
 }
 
-export const loginReducer = (state = initialState, action) => {
+export const signupReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOGIN_REQUEST:
+        case SIGNUP_REQUEST:
             return {
                 ...state,
-                loginData: action.payload
+                signupData: action.payload
             }
-        case LOGIN_SUCCESS:
+        case SIGNUP_SUCCESS:
             return {
                 ...state,
-                tokenData: action.payload,
+                registerData: action.payload,
                 success: true
             }
-        case LOGIN_FAILURE:
+        case SIGNUP_FAILURE:
             return {
                 ...state,
                 error: action.payload,

@@ -26,11 +26,9 @@ export function signUp(data: SignUpRequestModel) {
                     "grant_type": 'password',
                 })
             ).then(function (response) {
-                console.log(response.data)
                 dispatch(signupActions.success(response.data))
                 dispatch(appActions.hideLoader())
             }).catch(function (error) {
-                console.log(error.response)
                 dispatch(signupActions.failure(error.response))
                 dispatch(appActions.hideLoader())
             })

@@ -1,18 +1,19 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunk from 'redux-thunk'
 import reduxLogger from 'redux-logger'
-import {loginReducer} from './reducers/LoginReducer'
+import { loginReducer } from './reducers/LoginReducer'
 import { appReducer } from './reducers/AppReducer'
+import { signupReducer } from './reducers/SignUpReducer'
 
 
 const rootReducer = combineReducers(
-    { login: loginReducer, app: appReducer }
+    { login: loginReducer, signup: signupReducer, app: appReducer }
 )
-const store = createStore(rootReducer,     compose(
-        applyMiddleware(
-            thunk,
-            reduxLogger
-        )
-    ));
+const store = createStore(rootReducer, compose(
+    applyMiddleware(
+        thunk,
+        reduxLogger
+    )
+));
 
 export default store;

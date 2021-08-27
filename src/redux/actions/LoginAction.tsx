@@ -22,10 +22,8 @@ export function login(username, password) {
                     "grant_type": 'password',
                 })
             ).then(function (response) {
-                console.log(response.data)
                 dispatch(loginActions.success(response.data))
             }).catch(function (error) {
-                console.log(error.response)
                 dispatch(loginActions.failure(error.response))
             })
         } catch (error) {

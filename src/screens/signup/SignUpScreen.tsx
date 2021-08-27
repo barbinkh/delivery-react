@@ -4,11 +4,11 @@ import { useState } from "react";
 import { SafeAreaView, Image, View, TextInput, Text, StyleSheet, Button, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView } from "react-native"
 import { signUp } from "../../redux/actions/SignUpActions";
 import { validateEmail, validateName, validatePassword, validateConfirmPassword } from "../../utils/ValidationUtils"
-import { Platform } from "react-native";
 
 
 function SingUp(props) {
     const loading = props.loading
+    const success = props.success
 
     const [inputValue, setValue] = useState({
         fullname: '',
@@ -70,9 +70,13 @@ function SingUp(props) {
 
     const handleClick = () => {
         if (!!!(errors.confirmPasswordError && errors.emailError && errors.nameError && errors.passwordError)) {
-           
+
             props.signUp({ fullname: inputValue.fullname, email: inputValue.email, password: inputValue.password, confirmPassword: inputValue.confirmPassword })
         }
+    }
+
+    if (success) {
+        props.history.push("/main")
     }
 
     return (
@@ -121,7 +125,7 @@ function SingUp(props) {
     )
 }
 function mapStateToProps(state) {
-    return { loading: state.app.loading }
+    return { loading: state.app.loading, success: state.signup.success }
 }
 export default connect(mapStateToProps, { signUp })(SingUp)
 

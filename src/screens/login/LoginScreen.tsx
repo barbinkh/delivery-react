@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { login } from "../../redux/actions/LoginAction";
 
 function Login(props) {
+    const success = props.success
     const [inputValue, setValue] = useState({
         username: "barbinkh@yopmail.com",
         password: "123456" //qkmme@vEEW!8f5r
@@ -20,6 +21,10 @@ function Login(props) {
             password: text
         })
     }
+    if (success) {
+        props.history.push("/main")
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
@@ -41,7 +46,7 @@ function Login(props) {
                     <View style={[{ width: "50%", margin: 10 }]}>
                         <Button
                             title="SIGN UP"
-                            onPress={() => { props.history.push("/signup")}}
+                            onPress={() => { props.history.push("/signup") }}
                         />
                     </View>
                     <View style={[{ width: "50%", margin: 10 }]}>
@@ -58,8 +63,13 @@ function Login(props) {
     )
 }
 
+function mapStateToProps(state) {
+    return { success: state.login.success }
+}
 
-export default connect(null, { login })(Login)
+export default connect(
+    mapStateToProps,
+    { login })(Login)
 
 const styles = StyleSheet.create({
     container: {

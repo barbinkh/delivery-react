@@ -6,6 +6,7 @@ import  Login  from './src/screens/login/LoginScreen';
 import SignUp from './src/screens/signup/SignUpScreen';
 import { Provider } from 'react-redux';
 import store from './src/redux/Store';
+import  Main from './src/screens/main/MainScreen';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route exact path="/" component={Splash}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/signup" component={SignUp}/>
+          <Route exact path="/main" component={Main}/>
         </Switch>
       </View>
     </NativeRouter>
