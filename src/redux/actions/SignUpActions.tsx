@@ -1,17 +1,17 @@
 import { API } from "../../data/api/ApiConfig";
-import { SignUpRequestModel } from "../../data/api/auth/models/SignUpRequestModel";
-import { SignUpResponseModel } from "../../data/api/auth/models/SignUpResponseModel"
+import { ISignUpRequestModel } from "../../data/api/auth/models/ISignUpRequestModel";
+import { ISignUpResponseModel } from "../../data/api/auth/models/ISignUpResponseModel"
 import { SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../constants/Constants";
 import { appActions } from "./AppActions";
 
 
 export const signupActions = {
-    request: (payload: SignUpRequestModel) => ({ type: SIGNUP_REQUEST, payload }),
-    success: (payload: SignUpResponseModel) => ({ type: SIGNUP_SUCCESS, payload }),
+    request: (payload: ISignUpRequestModel) => ({ type: SIGNUP_REQUEST, payload }),
+    success: (payload: ISignUpResponseModel) => ({ type: SIGNUP_SUCCESS, payload }),
     failure: (error) => ({ type: SIGNUP_FAILURE, payload: error }),
 }
 
-export function signUp(data: SignUpRequestModel) {
+export function signUp(data: ISignUpRequestModel) {
     return dispatch => {
         dispatch(appActions.showLoader())
         dispatch(signupActions.request(data))

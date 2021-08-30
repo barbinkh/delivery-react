@@ -1,35 +1,27 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import { Splash } from './src/screens/splash/SplashScreen';
-import { NativeRouter, Switch, Route } from 'react-router-native';
-import  Login  from './src/screens/login/LoginScreen';
+import Login from './src/screens/login/LoginScreen';
 import SignUp from './src/screens/signup/SignUpScreen';
 import { Provider } from 'react-redux';
 import store from './src/redux/Store';
-import  Main from './src/screens/main/MainScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeStack from './src/screens/main/MainScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
-    <NativeRouter>
-      <View style={styles.container}>
-        <Switch>
-          <Route exact path="/" component={Splash}/>
-          <Route exact path="/login" component={Login}/>
-          <Route exact path="/signup" component={SignUp}/>
-          <Route exact path="/main" component={Main}/>
-        </Switch>
-      </View>
-    </NativeRouter>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Splash" >
+          <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Main" component={HomeStack} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

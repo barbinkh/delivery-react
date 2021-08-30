@@ -76,7 +76,7 @@ function SingUp(props) {
     }
 
     if (success) {
-        props.history.push("/main")
+        props.navigation.navigate('Main')
     }
 
     return (

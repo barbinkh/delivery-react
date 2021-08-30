@@ -22,7 +22,7 @@ function Login(props) {
         })
     }
     if (success) {
-        props.history.push("/main")
+        props.navigation.navigate('Main')
     }
 
     return (
@@ -46,7 +46,7 @@ function Login(props) {
                     <View style={[{ width: "50%", margin: 10 }]}>
                         <Button
                             title="SIGN UP"
-                            onPress={() => { props.history.push("/signup") }}
+                            onPress={() => { props.navigation.navigate('SignUp') }}
                         />
                     </View>
                     <View style={[{ width: "50%", margin: 10 }]}>

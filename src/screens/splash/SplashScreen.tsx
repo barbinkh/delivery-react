@@ -1,9 +1,9 @@
 import React from "react";
 import { SafeAreaView, Text, StyleSheet } from "react-native";
 
-export const Splash = ({ history }) => {
+export const Splash = ({ navigation }) => {
     setTimeout(() => {
-        history.push("/login");
+        navigation.navigate('Login');
     }, 2000);
     return (
         <SafeAreaView style={{backgroundColor:"#ebca28", width:"100%", height:"100%", alignItems:"center", justifyContent:"center"}}>

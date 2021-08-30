@@ -1,12 +1,12 @@
 
 import { API } from "../../data/api/ApiConfig"
-import { LoginModel } from "../../data/api/auth/models/LoginModel"
-import { TokenModel } from "../../data/api/auth/models/TokenModel"
+import { ILoginModel } from "../../data/api/auth/models/ILoginModel"
+import { ITokenModel } from "../../data/api/auth/models/ITokenModel"
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "../constants/Constants"
 
 export const loginActions = {
-    request: (user: LoginModel) => ({ type: LOGIN_REQUEST, payload: user }),
-    success: (token: TokenModel) => ({ type: LOGIN_SUCCESS, payload: token }),
+    request: (user: ILoginModel) => ({ type: LOGIN_REQUEST, payload: user }),
+    success: (token: ITokenModel) => ({ type: LOGIN_SUCCESS, payload: token }),
     failure: (error: any) => ({ type: LOGIN_FAILURE, payload: error }),
 }
 
