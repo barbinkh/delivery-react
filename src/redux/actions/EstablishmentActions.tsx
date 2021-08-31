@@ -1,5 +1,5 @@
-import { API } from "../../data/api/ApiConfig";
-import { IFoodProviderModel } from "../../data/api/auth/models/IFoodProvideModel";
+import  API  from "../../data/api/ApiConfig";
+import { IFoodProviderModel } from "../../data/api/foodprovider/IFoodProvideModel";
 import { ETABLISHMENT_FAILURE, ETABLISHMENT_REQUEST, ETABLISHMENT_SUCCESS } from "../constants/Constants";
 import { appActions } from "./AppActions";
 
@@ -15,15 +15,7 @@ export function getEstablishments(page: number) {
         dispatch(appActions.showLoader())
         dispatch(establishmentActions.request())
         try {
-            const qs = require('qs');
-            API.get('v1/establishments/',
-                // qs.stringify({
-                //     "fullname": data.fullname,
-                //     "email": data.email,
-                //     "password": data.password,
-                //     "password2": data.confirmPassword,
-                //     "grant_type": 'password',
-                // })
+            API.get('v1/establishments/'
             ).then(function (response) {
                 dispatch(establishmentActions.success(response.data))
                 dispatch(appActions.hideLoader())

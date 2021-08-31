@@ -1,4 +1,5 @@
 
+import { setAuthToken } from "../../data/local/storage/AsyncStorage";
 import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE } from "../constants/Constants";
 
 
@@ -17,6 +18,7 @@ export const signupReducer = (state = initialState, action) => {
                 signupData: action.payload
             }
         case SIGNUP_SUCCESS:
+            setAuthToken(action.payload.access_token)
             return {
                 ...state,
                 registerData: action.payload,

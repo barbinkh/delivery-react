@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Cart from '../cart/CartScreen';
-import Home from "../home/HomeScreen"
-import { NavigationContainer } from '@react-navigation/native';
+import Cart from '../screens/cart/CartScreen';
+import { NavigationContainer, StackActions, NavigationAction } from '@react-navigation/native';
+import Home from '../screens/home/HomeScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function HomeStack() {
+export function HomeStack() {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
@@ -14,3 +14,9 @@ export default function HomeStack() {
         </Tab.Navigator>
     );
 }
+
+export function MainStack(){
+
+}
+
+export default {HomeStack, MainStack}

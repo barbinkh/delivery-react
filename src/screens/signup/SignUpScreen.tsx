@@ -4,6 +4,8 @@ import { useState } from "react";
 import { SafeAreaView, Image, View, TextInput, Text, StyleSheet, Button, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView } from "react-native"
 import { signUp } from "../../redux/actions/SignUpActions";
 import { validateEmail, validateName, validatePassword, validateConfirmPassword } from "../../utils/ValidationUtils"
+import { useEffect } from "react";
+import { StackActions } from "@react-navigation/native";
 
 
 function SingUp(props) {
@@ -18,10 +20,10 @@ function SingUp(props) {
     })
 
     const [errors, setError] = useState({
-        nameError: "",
-        emailError: "",
-        passwordError: "",
-        confirmPasswordError: "",
+        nameError: '',
+        emailError: '',
+        passwordError: '',
+        confirmPasswordError: '',
         isValid: false
     })
 
@@ -75,9 +77,11 @@ function SingUp(props) {
         }
     }
 
-    if (success) {
-        props.navigation.navigate('Main')
-    }
+    useEffect(() => {
+        if (success) {
+            props.navigation.dispatch(StackActions.replace('Main'))
+        }
+    })
 
     return (
         <SafeAreaView style={styles.container}>

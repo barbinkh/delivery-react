@@ -1,4 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StackActions } from "@react-navigation/native";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Image, Text, TextInput, Button, StyleSheet, SafeAreaView, View, Alert, TouchableOpacity } from 'react-native'
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/LoginAction";
@@ -9,6 +12,7 @@ function Login(props) {
         username: "barbinkh@yopmail.com",
         password: "123456" //qkmme@vEEW!8f5r
     })
+    AsyncStorage.clear()
     const usernameInputChange = (text) => {
         setValue({
             ...inputValue,
@@ -21,9 +25,12 @@ function Login(props) {
             password: text
         })
     }
-    if (success) {
-        props.navigation.navigate('Main')
-    }
+
+    useEffect(() => {
+        if (success) {
+            props.navigation.dispatch(StackActions.replace('Main'))
+        }
+    });
 
     return (
         <SafeAreaView style={styles.container}>

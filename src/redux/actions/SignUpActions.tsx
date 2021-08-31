@@ -1,6 +1,6 @@
-import { API } from "../../data/api/ApiConfig";
-import { ISignUpRequestModel } from "../../data/api/auth/models/ISignUpRequestModel";
-import { ISignUpResponseModel } from "../../data/api/auth/models/ISignUpResponseModel"
+import  API from "../../data/api/ApiConfig";
+import { ISignUpRequestModel } from "../../data/api/auth/ISignUpRequestModel";
+import { ISignUpResponseModel } from "../../data/api/auth/ISignUpResponseModel"
 import { SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../constants/Constants";
 import { appActions } from "./AppActions";
 

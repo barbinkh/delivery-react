@@ -1,29 +1,23 @@
-
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../constants/Constants";
-import {setAuthToken} from '../../data/local//storage/AsyncStorage'
+import { ETABLISHMENT_FAILURE, ETABLISHMENT_REQUEST, ETABLISHMENT_SUCCESS } from "../constants/Constants"
 
 const initialState = {
-    loginData: null,
-    tokenData: null,
-    error: null,
-    success: false
+
 }
 
-export const loginReducer = (state = initialState, action) => {
+export const foodProviderReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LOGIN_REQUEST:
+        case ETABLISHMENT_REQUEST:
             return {
                 ...state,
                 loginData: action.payload
             }
-        case LOGIN_SUCCESS:
-            setAuthToken(action.payload.access_token)
+        case ETABLISHMENT_SUCCESS:
             return {
                 ...state,
                 tokenData: action.payload,
                 success: true
             }
-        case LOGIN_FAILURE:
+        case ETABLISHMENT_FAILURE:
             return {
                 ...state,
                 error: action.payload,
@@ -33,4 +27,3 @@ export const loginReducer = (state = initialState, action) => {
             return state
     }
 }
-
