@@ -1,4 +1,5 @@
 import  API  from "../../data/api/ApiConfig";
+import { BasePaginationResponse } from "../../data/api/base/IBasePaginationResponse";
 import { IFoodProviderModel } from "../../data/api/foodprovider/IFoodProvideModel";
 import { ETABLISHMENT_FAILURE, ETABLISHMENT_REQUEST, ETABLISHMENT_SUCCESS } from "../constants/Constants";
 import { appActions } from "./AppActions";
@@ -6,7 +7,7 @@ import { appActions } from "./AppActions";
 
 export const establishmentActions = {
     request: () => ({ type: ETABLISHMENT_REQUEST }),
-    success: (providers: IFoodProviderModel) => ({ type: ETABLISHMENT_SUCCESS, payload: providers }),
+    success: (providers: BasePaginationResponse<IFoodProviderModel>) => ({ type: ETABLISHMENT_SUCCESS, payload: providers }),
     failure: (error: any) => ({ type: ETABLISHMENT_FAILURE, payload: error }),
 }
 
