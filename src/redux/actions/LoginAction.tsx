@@ -2,6 +2,7 @@
 import API from "../../data/api/ApiConfig"
 import { ILoginModel } from "../../data/api/auth/ILoginModel"
 import { ITokenModel } from "../../data/api/auth/ITokenModel"
+import { setAuthToken } from "../../data/local/storage/AsyncStorage"
 import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "../constants/Constants"
 
 
@@ -23,6 +24,7 @@ export function login(username, password) {
                     "grant_type": 'password',
                 })
             ).then(function (response) {
+                setAuthToken(response.data.access_token)
                 dispatch(loginActions.success(response.data))
             }).catch(function (error) {
                 dispatch(loginActions.failure(error.response))

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { Image, Text, TextInput, Button, StyleSheet, SafeAreaView, View, Alert, TouchableOpacity } from 'react-native'
 import { connect } from "react-redux";
 import { login } from "../../redux/actions/LoginAction";
+import tw from "tailwind-react-native-classnames"
 
 function Login(props) {
     const success = props.success
@@ -33,7 +34,7 @@ function Login(props) {
     });
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={tw`w-full flex-1 bg-yellow-300`}>
             <Image style={styles.imageLogo} source={{ uri: "https://image.flaticon.com/icons/png/512/3027/3027212.png" }}></Image>
             <View style={styles.textInputContainer}>
                 <TextInput style={styles.textInput}
@@ -45,10 +46,9 @@ function Login(props) {
                     placeholder="Password"
                     onChangeText={(text) => passwordInputChange(text)}
                     defaultValue={inputValue.password} />
-                <Text style={{
-                    alignSelf: "flex-end",
-                    marginEnd: 16,
-                }}>Forgot Password?</Text>
+                <Text style={tw`text-gray-900 self-end mr-4`}>
+                    Forgot Password?
+                    </Text>
                 <View style={styles.buttonsContainer}>
                     <View style={[{ width: "50%", margin: 10 }]}>
                         <Button
@@ -79,11 +79,6 @@ export default connect(
     { login })(Login)
 
 const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        flex: 1,
-        backgroundColor: "#ebca28"
-    },
     textInput: {
         height: 40,
         margin: 12,
@@ -99,6 +94,14 @@ const styles = StyleSheet.create({
         backgroundColor: "#00BCD4",
         height: 400,
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 5,
     },
     imageLogo: {
         marginTop: 100,

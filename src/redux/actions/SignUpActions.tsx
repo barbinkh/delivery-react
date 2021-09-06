@@ -1,6 +1,7 @@
 import  API from "../../data/api/ApiConfig";
 import { ISignUpRequestModel } from "../../data/api/auth/ISignUpRequestModel";
 import { ISignUpResponseModel } from "../../data/api/auth/ISignUpResponseModel"
+import { setAuthToken } from "../../data/local/storage/AsyncStorage";
 import { SIGNUP_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "../constants/Constants";
 import { appActions } from "./AppActions";
 
@@ -26,6 +27,7 @@ export function signUp(data: ISignUpRequestModel) {
                     "grant_type": 'password',
                 })
             ).then(function (response) {
+                setAuthToken(response.data.access_token)
                 dispatch(signupActions.success(response.data))
                 dispatch(appActions.hideLoader())
             }).catch(function (error) {

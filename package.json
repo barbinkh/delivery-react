@@ -29,7 +29,8 @@
     "react-redux": "^7.2.4",
     "react-router-native": "^5.2.0",
     "redux": "^4.1.1",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "tailwind-react-native-classnames": "^1.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -38,6 +39,9 @@
     "@types/react-native-base64": "^0.1.0",
     "@types/react-router-native": "^5.1.1",
     "@types/redux-logger": "^3.0.9",
+    "autoprefixer": "^10.3.3",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.9",
     "typescript": "~4.0.0"
   },
   "private": true

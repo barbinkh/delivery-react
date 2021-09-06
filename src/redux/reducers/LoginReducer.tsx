@@ -1,6 +1,5 @@
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../constants/Constants";
-import {setAuthToken} from '../../data/local//storage/AsyncStorage'
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../constants/Constants"
 
 const initialState = {
     loginData: null,
@@ -17,7 +16,6 @@ export const loginReducer = (state = initialState, action) => {
                 loginData: action.payload
             }
         case LOGIN_SUCCESS:
-            setAuthToken(action.payload.access_token)
             return {
                 ...state,
                 tokenData: action.payload,
