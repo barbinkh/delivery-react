@@ -5,6 +5,7 @@ import { View, Text, FlatList, StyleSheet, SafeAreaView, Image } from "react-nat
 import { connect } from "react-redux";
 import { IFoodProviderModel } from "../../data/api/foodprovider/IFoodProvideModel";
 import { getEstablishments } from "../../redux/actions/EstablishmentActions";
+import OpenClose from "./components/OpenCloseComponent";
 
 function Home(props) {
     useEffect(() => {
@@ -15,6 +16,7 @@ function Home(props) {
         <View style={styles.item}>
             <Image style={styles.banner} source={{ uri: data.image }}></Image>
             <Text style={styles.title}>{data.title}</Text>
+            <OpenClose style={styles.title} isOpen = {data.status === 'open'} deliveryPrice = {data.delivery_price}/>
         </View>
     );
     const renderItem = ({ item }) => (
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         flex: 1,
+        paddingTop: 70,
         backgroundColor: "#ebca28"
     },
     banner: {
